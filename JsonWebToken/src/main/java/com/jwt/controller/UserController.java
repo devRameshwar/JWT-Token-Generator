@@ -22,4 +22,10 @@ public class UserController {
     public ResponseEntity<String> getUserName(@RequestHeader String header) {
         return new ResponseEntity<>(tokenGeneretor.getUserNameFromToken(header), HttpStatus.OK);
     }
+
+    @GetMapping(path = "/getvailedity")
+    public ResponseEntity<Boolean> getVailedityOfToken(@RequestHeader String header) {
+        System.err.println(header);
+        return new ResponseEntity<>(tokenGeneretor.getTokenVailedity(header), HttpStatus.OK);
+    }
 }

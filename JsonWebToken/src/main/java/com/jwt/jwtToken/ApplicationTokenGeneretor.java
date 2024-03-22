@@ -1,6 +1,7 @@
 package com.jwt.jwtToken;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class ApplicationTokenGeneretor {
                 .setSubject(UserId)
                 .setIssuer("ICICI Bank")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)))
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)))
                 .signWith(SignatureAlgorithm.HS256,secreteKey)
                 .encodePayload(true)
                 .compact();
@@ -34,10 +35,36 @@ public class ApplicationTokenGeneretor {
         return  Jwts.parser().setSigningKey(secreteKey)
                 .build()
                 .parseSignedClaims(token)
-                .getBody().toString();
+                .getPayload()
+                .toString();
 
         /*Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-        in this code parseClaimsJws(token) method is decrypted replace with .build()
-                       .parseSignedClaims(token)*/
+        in this code parseClaimsJws(token) method is decrypted replace with
+         .build().parseSignedClaims(token)*/
+    }
+    //Create a method with a Boolean return type for check token is valid or not
+    public Boolean getTokenVailedity(String token){
+        try {
+            Date expiration = parser()
+                    .setSigningKey(secreteKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getExpiration();
+
+            System.err.println("expiration: "+expiration);
+            Date issuedAt = parser()
+                    .setSigningKey(secreteKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getIssuedAt();
+            System.out.println("issuedAt: "+issuedAt);
+            //it returns every time false if token is availed if token is invalided then it throws exception
+            return expiration.before(issuedAt);
+
+        }catch (ExpiredJwtException e){
+            return  true;
+        }
     }
 }
