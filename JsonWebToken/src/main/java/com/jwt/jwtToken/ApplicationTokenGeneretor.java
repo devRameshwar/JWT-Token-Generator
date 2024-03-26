@@ -14,7 +14,7 @@ import static io.jsonwebtoken.Jwts.*;
 @Component
 public class ApplicationTokenGeneretor {
 
-    private String secreteKey = "ADTWEBBISN1NI19LO0JQW1TYBVBVF8HVCX8ADHHGGGJH";
+    private String secreteKey = "XXVYWEBBING1NI19LO0JQW1TYBVBVF8HVAC8ADHHGGGJH";
 
     public String getJwtToken(String UserId) {
 
@@ -32,11 +32,12 @@ public class ApplicationTokenGeneretor {
     //to getting the username
     public String getUserNameFromToken(String token){
 
-        return  Jwts.parser().setSigningKey(secreteKey)
+        String user = parser().setSigningKey(secreteKey)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload()
-                .toString();
+                .getPayload().getSubject().toString();
+
+        return user;
 
         /*Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         in this code parseClaimsJws(token) method is decrypted replace with
@@ -51,8 +52,8 @@ public class ApplicationTokenGeneretor {
                     .parseSignedClaims(token)
                     .getPayload()
                     .getExpiration();
-
             System.err.println("expiration: "+expiration);
+
             Date issuedAt = parser()
                     .setSigningKey(secreteKey)
                     .build()
@@ -61,10 +62,18 @@ public class ApplicationTokenGeneretor {
                     .getIssuedAt();
             System.out.println("issuedAt: "+issuedAt);
             //it returns every time false if token is availed if token is invalided then it throws exception
-            return expiration.before(issuedAt);
+            return !expiration.before(issuedAt);
 
         }catch (ExpiredJwtException e){
-            return  true;
+            return  false;
         }
+    }
+    public Boolean isTokenVailed(String requestUserName,String token){
+        /*Here we check Two things
+        * 1. token time interval= true and
+        * 2. Check UserName match or not from token */
+        Boolean tokenVailedity = this.getTokenVailedity(token);
+        String userNameFromToken = this.getUserNameFromToken(token);
+        return userNameFromToken.equals(requestUserName) & tokenVailedity;
     }
 }

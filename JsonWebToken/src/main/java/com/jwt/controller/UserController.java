@@ -28,4 +28,10 @@ public class UserController {
         System.err.println(header);
         return new ResponseEntity<>(tokenGeneretor.getTokenVailedity(header), HttpStatus.OK);
     }
+    @GetMapping(path = "/isTokenVailed/{userName}")
+    public ResponseEntity<Boolean> isTokenVailed(@RequestHeader String header ,@PathVariable String userName ){
+        System.err.println(header);
+        System.err.println(userName);
+        return new ResponseEntity<>(this.tokenGeneretor.isTokenVailed(userName,header),HttpStatus.OK);
+    }
 }
