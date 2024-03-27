@@ -1,6 +1,6 @@
 package com.jwt.controller;
 
-import com.jwt.jwtToken.ApplicationTokenGeneretor;
+import com.jwt.security.jwtToken.ApplicationTokenGeneretor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
