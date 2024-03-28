@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInfoService   {
+public class UserInfoService  implements UserDetailsService {
     @Autowired
     private UserInfoRepository repository;
 
@@ -39,9 +39,10 @@ public class UserInfoService   {
         return null;
     }
 
-  /*  @Override
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        *//*this is an abstract Method define in UserDetailsService functional interface we can also use lambda expression *//*
+       /* this is an abstract Method define in UserDetailsService functional interface we can also use lambda expression */
+
         return null;
-    }*/
+    }
 }
