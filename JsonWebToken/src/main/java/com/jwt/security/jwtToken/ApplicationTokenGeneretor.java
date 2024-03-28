@@ -15,6 +15,7 @@ public class ApplicationTokenGeneretor {
 
     private final String secreteKey = "XXVYWEBBING1NI19LO0JQW1TYBVBVF8HVAC8ADHHGGGJH";
 
+    /*TODO: generating a token */
     public String getJwtToken(String UserId) {
 
         return builder()
@@ -26,7 +27,7 @@ public class ApplicationTokenGeneretor {
 
     }
 
-    //to getting the username
+    //TODO: getting the username form exiting token
     public String getUserNameFromToken(String token) {
 
         String user = parser()
@@ -41,7 +42,7 @@ public class ApplicationTokenGeneretor {
          .build().parseSignedClaims(token)*/
     }
 
-    //Create a method with a Boolean return type for check token is valid or not
+    //TODO: Create a method with a Boolean return type for check token is valid or not
     public Boolean getTokenVailedity(String token) {
         try {
             Date expiration = parser()
@@ -67,6 +68,7 @@ public class ApplicationTokenGeneretor {
         }
     }
 
+    /*TODO: to check the token is vailed or note with help of request user name and token*/
     public Boolean isTokenVailed(String requestUserName, String token) {
         /*Here we check Two things
          * 1. token time interval= true and

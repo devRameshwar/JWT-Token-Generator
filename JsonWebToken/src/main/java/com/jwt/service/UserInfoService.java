@@ -31,18 +31,18 @@ public class UserInfoService  implements UserDetailsService {
         return "User registration successfully done...";
     }
 
-    public String logIn(LoginRequest request) {
-        //we can write login logic here with the help of spring security
-
-        UserDetailsService userDetailsService=(String username)->
-                repository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("User not found"));
+   /* public String logIn(String name) {
+        //TODO:we can write login logic here with the help of spring security
+        UserDetailsService userDetailsService=(username)->
+                repository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
+        userDetailsService.loadUserByUsername(name);
         return null;
-    }
+    }*/
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       /* this is an abstract Method define in UserDetailsService functional interface we can also use lambda expression */
-
-        return null;
+       /*TODO: this is an abstract Method define in UserDetailsService functional interface we can also use lambda expression */
+        UserDetails userDetails = repository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
+        return userDetails;
     }
 }

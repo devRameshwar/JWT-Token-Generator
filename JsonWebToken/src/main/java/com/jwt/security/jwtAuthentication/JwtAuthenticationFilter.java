@@ -31,10 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         logger.info("Inside the JwtAuthenticationFilter in doFilterCain Method..");
-        /*First: we check in request Token is available or Not...*/
+        /*TODO: First: we check in request Token is available or Not...*/
         String token = request.getHeader("header");
         logger.info("Token shered by user " + token);
-        /*after getting token we will extract username with help of request token */
+        /*TODO: after getting token we will extract username with help of request token */
         String userNameFromToken = null;
         if (token == null) {
             logger.info("In request token is empty Please come with token.");
@@ -43,10 +43,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userNameFromToken = tokenGeneretor.getUserNameFromToken(token);
             logger.info("User Name is " + userNameFromToken);
         }
-        /*validate Token user name and clint request name*/
-        /*check null*/
+        /*TODO: validate Token user name and clint request name*/
+        /*TODO: check null*/
         if (userNameFromToken != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            /*now checking details & get data from database passing user name*/
+            /*TODO:now checking details & get data from database passing user name*/
             UserDetails userDetails = service.loadUserByUsername(userNameFromToken);
             /*token valediction with respect to database user details and time details.
              * this is already defined in ApplicationTokenGeneretor class*/
@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 /*Handover token to authentication to security context*/
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                //security heck is completed.
+                //TODO: security heck is completed.
             } else {
                 logger.info("Token is invalided please  try with a vailed token");
             }
