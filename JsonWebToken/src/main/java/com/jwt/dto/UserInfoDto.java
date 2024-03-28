@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserInfoDto {
 
+    private Integer userId;
+
     private String userName;
 
     private String email;
@@ -18,5 +20,6 @@ public class UserInfoDto {
     private String mobileNumber;
 
     private String password;
+
 
 }

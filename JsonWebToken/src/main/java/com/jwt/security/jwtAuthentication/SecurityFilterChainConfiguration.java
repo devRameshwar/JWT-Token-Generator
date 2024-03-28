@@ -1,5 +1,6 @@
 package com.jwt.security.jwtAuthentication;
 
+import com.jwt.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class SecurityFilterChainConfiguration {
     Logger logger = LoggerFactory.getLogger(SecurityFilterChainConfiguration.class);
     @Autowired
     private JwtAuthenticationFilter tokenFilter;
+    @Autowired
+    private UserInfoService service;
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder() {

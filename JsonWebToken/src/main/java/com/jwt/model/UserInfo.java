@@ -19,7 +19,6 @@ import java.util.Collection;
 @Table(name = "user_information")
 public class UserInfo implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer userId;
     @Column

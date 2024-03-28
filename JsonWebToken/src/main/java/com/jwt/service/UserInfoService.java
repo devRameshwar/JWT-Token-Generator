@@ -5,6 +5,8 @@ import com.jwt.dto.UserInfoDto;
 import com.jwt.model.UserInfo;
 import com.jwt.repository.UserInfoRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,10 +25,18 @@ public class UserInfoService  implements UserDetailsService {
     @Autowired
     private ModelMapper mapper;
 
+    Logger logger = LoggerFactory.getLogger(UserInfoService.class);
+
     public String registration( UserInfoDto request) {
         UserInfo user = new UserInfo();
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        mapper.map(request,user);
+        logger.info("password: "+user.getPassword());
+        user.setUserId(request.getUserId());
+        user.setUserName(request.getUserName());
+        user.setEmail(request.getEmail());
+        user.setMobileNumber(request.getMobileNumber());
+       // mapper.map(request,user);
+        logger.info(user.toString());
         repository.save(user);
         return "User registration successfully done...";
     }
