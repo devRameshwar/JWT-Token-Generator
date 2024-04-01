@@ -2,8 +2,10 @@ package com.jwt.security.jwtToken;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +17,7 @@ public class ApplicationTokenGeneretor {
 
     private final String secreteKey = "XXVYWEBBING1NI19LO0JQW1TYBVBVF8HVAC8ADHHGGGJH";
 
+
     /*TODO: generating a token */
     public String getJwtToken(String UserId) {
 
@@ -25,17 +28,23 @@ public class ApplicationTokenGeneretor {
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2)))
                 .signWith(SignatureAlgorithm.HS256, secreteKey).encodePayload(true).compact();
 
+
     }
 
     //TODO: getting the username form exiting token
     public String getUserNameFromToken(String token) {
+            if(this.getTokenVailedity(token)){
+                return parser()
+                        .setSigningKey(secreteKey)
+                        .build()
+                        .parseSignedClaims(token)
+                        .getPayload()
+                        .getSubject();
+            }else {
+                return String.valueOf(false);
+            }
 
-        String user = parser()
-                .setSigningKey(secreteKey)
-                .build().parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
-        return user;
+
 
         /*Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         in this code parseClaimsJws(token) method is decrypted replace with

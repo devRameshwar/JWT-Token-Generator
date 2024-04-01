@@ -1,5 +1,6 @@
 package com.jwt.dto;
 
+import com.jwt.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class UserInfoDto {
     private String mobileNumber;
 
     private String password;
+
+    private Role role;
 
 
 }

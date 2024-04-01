@@ -6,9 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -18,6 +19,9 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "user_information")
 public class UserInfo implements UserDetails {
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Id
     @Column
     private Integer userId;
@@ -32,7 +36,7 @@ public class UserInfo implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //Here we decide role-based Authorization
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
     @Override
     public String getUsername() {
